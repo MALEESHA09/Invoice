@@ -494,7 +494,7 @@
                     <li><a href="/Condemn" class="menu-item">Condemn</a></li>
                     <li><a href="/AssetHistory" class="menu-item">Asset History</a></li>
                     <li><a href="/Asset" class="menu-item active">Asset</a></li>
-                    <li><a href="/Invoice" class="menu-item">Invoice</a></li>
+                    <li><a href="/Invoices" class="menu-item">Invoice</a></li>
                     <li><a href="/Movement" class="menu-item">Movement</a></li>
                 </ul>
             </nav>
@@ -511,45 +511,47 @@
         
         <div class="card shadow-sm">
             <div class="card-body">
-                <form th:action="@{/invoices/save}" th:object="${invoice}" method="post">
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <label class="form-label">Item Name</label>
-                            <select class="form-select" th:field="*{asset}" required>
-                                <option value="">Select an Asset</option>
-                                <option th:each="asset : ${assets}" 
-                                        th:value="${asset.id}"
-                                        th:text="${asset.name}"></option>
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Shop/Vendor</label>
-                            <select class="form-select" th:field="*{vendor}" required>
-                                <option value="">Select a Vendor</option>
-                                <option th:each="vendor : ${vendors}" 
-                                        th:value="${vendor.vendorId}"
-                                        th:text="${vendor.vendorName}"></option>
-                            </select>
-                        </div>
-                    </div>
-                    
-                    <div class="row mb-3">
-                        <div class="col-md-4">
-                            <label class="form-label">Invoice Date</label>
-                            <input type="date" class="form-control" th:field="*{invoiceDate}" required>
-                        </div>
-                        <div class="col-md-4">
-                            <label class="form-label">Item Count</label>
-                            <input type="number" class="form-control" th:field="*{itemCount}" min="1" required>
-                        </div>
-                    </div>
-                    
-                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-save me-2"></i>Save Invoice
-                        </button>
-                    </div>
-                </form>
+               <form th:action="@{/invoices/save}" th:object="${invoices}" method="post">
+    <input type="hidden" th:field="*{invoiceId}" />
+    
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label class="form-label">Item Name</label>
+            <select class="form-select" th:field="*{asset}" required>
+                <option value="">Select an Asset</option>
+                <option th:each="asset : ${assets}" 
+                        th:value="${asset.assetId}"
+                        th:text="${asset.name}"></option>
+            </select>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Shop/Vendor</label>
+            <select class="form-select" th:field="*{vendor}" required>
+                <option value="">Select a Vendor</option>
+                <option th:each="vendor : ${vendors}" 
+                        th:value="${vendor.vendorId}"
+                        th:text="${vendor.vendorName}"></option>
+            </select>
+        </div>
+    </div>
+    
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <label class="form-label">Invoice Date</label>
+            <input type="date" class="form-control" th:field="*{invoiceDate}" required>
+        </div>
+        <div class="col-md-4">
+            <label class="form-label">Item Count</label>
+            <input type="number" class="form-control" th:field="*{itemCount}" min="1" required>
+        </div>
+    </div>
+    
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <button type="submit" class="btn btn-primary">
+            <i class="fas fa-save me-2"></i>Save Invoice
+        </button>
+    </div>
+</form>
             </div>
         </div>
     </main>

@@ -1,5 +1,6 @@
 package com.example.AMS.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +23,7 @@ public class M_InvoiceController {
     private final M_AssetService assetService;
     private final M_VendorService vendorService;
 
+    @Autowired
     public M_InvoiceController(M_InvoiceService invoiceService,
                              M_AssetService assetService,
                              M_VendorService vendorService) {
@@ -30,25 +32,22 @@ public class M_InvoiceController {
         this.vendorService = vendorService;
     }
 
-    // List all invoices
     @GetMapping
     public String listInvoices(Model model) {
         model.addAttribute("invoices", invoiceService.getAllInvoices());
         return "invoices/invoice-list";
     }
 
-    // Show add form
     @GetMapping("/add")
     public String showAddForm(Model model) {
-        model.addAttribute("invoice", new Invoice());
+        model.addAttribute("invoices", new Invoice()); // Fixed attribute name
         model.addAttribute("assets", assetService.getAllAssets());
         model.addAttribute("vendors", vendorService.getAllVendors());
         return "invoices/invoice-add";
     }
 
-    // Save invoice
     @PostMapping("/save")
-    public String saveInvoice(@ModelAttribute Invoice invoice,
+    public String saveInvoice(@ModelAttribute("invoices") Invoice invoice,
                             RedirectAttributes redirectAttributes) {
         try {
             invoiceService.saveInvoice(invoice);
@@ -59,23 +58,28 @@ public class M_InvoiceController {
         return "redirect:/invoices";
     }
 
-    // View invoice details
     @GetMapping("/view/{id}")
     public String viewInvoice(@PathVariable String id, Model model) {
-        model.addAttribute("invoice", invoiceService.getInvoiceById(id));
+        Invoice invoice = invoiceService.getInvoiceById(id);
+        if (invoice == null) {
+            return "redirect:/invoices";
+        }
+        model.addAttribute("invoice", invoice);
         return "invoices/invoice-view";
     }
 
-    // Show edit form
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable String id, Model model) {
-        model.addAttribute("invoice", invoiceService.getInvoiceById(id));
+        Invoice invoice = invoiceService.getInvoiceById(id);
+        if (invoice == null) {
+            return "redirect:/invoices";
+        }
+        model.addAttribute("invoice", invoice);
         model.addAttribute("assets", assetService.getAllAssets());
         model.addAttribute("vendors", vendorService.getAllVendors());
-        return "invoices/invoice-add"; // Reuse the add form for editing
+        return "invoices/invoice-add";
     }
 
-    // Delete invoice
     @GetMapping("/delete/{id}")
     public String deleteInvoice(@PathVariable String id, RedirectAttributes redirectAttributes) {
         try {
