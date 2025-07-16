@@ -1,24 +1,60 @@
 package com.example.AMS.service;
 
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.example.AMS.model.Asset;
 import com.example.AMS.repository.M_AssetRepository;
-import com.example.AMS.repository.M_LocationRepository;
 
 @Service
-@Transactional
 public class M_AssetService {
+    private final M_AssetRepository assetRepository;
 
-
-    // Updated to use M_LocationRepository
-    public M_AssetService(M_AssetRepository assetRepository, 
-                         M_LocationRepository locationRepository) {    }
-
-    public Object getAllAssets() {
-        
-        throw new UnsupportedOperationException("Unimplemented method 'getAllAssets'");
+    @Autowired
+    public M_AssetService(M_AssetRepository assetRepository) {
+        this.assetRepository = assetRepository;
     }
 
-    // ... [keep all your existing methods unchanged] ...
+    public List<Asset> getAllAssets() {
+        return assetRepository.findAll();
+    }
+
+    public Asset getAssetById(String assetId) {
+        return assetRepository.findById(assetId).orElse(null);
+    }
+
+   public Asset saveAsset(Asset asset) {
+    if(asset.getName() == null || asset.getName().isEmpty()) {
+        
+        throw new IllegalArgumentException("Asset name cannot be empty");
+    }
+    
+    return assetRepository.save(asset);
+}
+
+    public void deleteAsset(String assetId) {
+        assetRepository.deleteById(assetId);
+    }
+
+    public List<Asset> searchAssets(String keyword) {
+        return assetRepository.searchAssets(keyword);
+    }
+
+    public List<Asset> findByInvoiceId(String invoiceId) {
+        return assetRepository.findByInvoiceId(invoiceId);
+    }
+
+    public List<Asset> findByName(String name) {
+        return assetRepository.findByNameContainingIgnoreCase(name);
+    }
+
+    public List<Asset> findByType(String type) {
+        return assetRepository.findByType(type);
+    }
+
+    public List<Asset> findByActivityStatus(boolean status) {
+        return assetRepository.findByActivityStatus(status);
+    }
 }

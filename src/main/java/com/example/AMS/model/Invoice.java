@@ -1,21 +1,27 @@
 package com.example.AMS.model;
-import jakarta.persistence.*;
 import java.util.Date;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Invoice {
     @Id
     private String invoiceId;
-    private Date invoiceDate;
-    private int itemCount;
-
+   
     @ManyToOne
     @JoinColumn(name = "assetId")
     private Asset asset;
 
     @ManyToOne
-    @JoinColumn(name = "vendorId")
+    @JoinColumn(name = "venderId")
     private Vendor vendor;
+
+    private Date invoiceDate;
+    private int itemCount;
+    
 
     // Getters and Setters
     public String getInvoiceId() { return invoiceId; }
@@ -28,4 +34,5 @@ public class Invoice {
     public void setAsset(Asset asset) { this.asset = asset; }
     public Vendor getVendor() { return vendor; }
     public void setVendor(Vendor vendor) { this.vendor = vendor; }
+    
 }

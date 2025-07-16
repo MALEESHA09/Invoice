@@ -1,4 +1,5 @@
 package com.example.AMS.model;
+
 import jakarta.persistence.*;
 import java.util.Date;
 
@@ -17,11 +18,17 @@ public class Asset {
     private Date warrantyDate;
     private String warrantyPeriod;
     private String purchaseStore;
+    private Double price;
+    private String serialNumber;
+
+    @ManyToOne
+    @JoinColumn(name = "invoice_id")
+    private Invoice invoice;
 
     @ManyToOne
     @JoinColumn(name = "locationId")
     private Location location;
-
+    
     // Getters and Setters
     public String getAssetId() { return assetId; }
     public void setAssetId(String assetId) { this.assetId = assetId; }
@@ -47,6 +54,12 @@ public class Asset {
     public void setWarrantyPeriod(String warrantyPeriod) { this.warrantyPeriod = warrantyPeriod; }
     public String getPurchaseStore() { return purchaseStore; }
     public void setPurchaseStore(String purchaseStore) { this.purchaseStore = purchaseStore; }
+    public Double getPrice() { return price; }
+    public void setPrice(Double price) { this.price = price; }
+    public String getSerialNumber() { return serialNumber; }
+    public void setSerialNumber(String serialNumber) { this.serialNumber = serialNumber; }
+    public Invoice getInvoice() { return invoice; }
+    public void setInvoice(Invoice invoice) { this.invoice = invoice; }
     public Location getLocation() { return location; }
     public void setLocation(Location location) { this.location = location; }
 }
