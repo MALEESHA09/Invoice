@@ -550,12 +550,7 @@
                             <option value="Movement">Movement</option>
                             <option value="Condemn">Condemn</option>
                         </select>
-                        <select class="filter-select" id="dateFilter">
-                            <option value="">All Dates</option>
-                            <option value="today">Today</option>
-                            <option value="last7days">Last 7 Days</option>
-                            <option value="thisMonth">This Month</option>
-                        </select>
+                        
                     </div>
                 </div>
 
@@ -582,19 +577,12 @@
                                 th:data-type="${movement.type}"
                                 th:data-location="${movement.locationDetails}"
                                 th:data-date="${#dates.format(movement.date, 'yyyy-MM-dd')}">
-                                <td th:text="${movement.movementId}">MOV-001</td>
-                                <td th:text="${movement.asset.assetId}">UOP-LAP-005</td>
-                                <td th:text="${movement.asset.name}">Laptop</td>
-                                <td th:text="${movement.room.roomName}">IT Lab</td>
-                                <td th:text="${movement.type}">Transfer</td>
-                                <td th:text="${movement.locationDetails}">IT Department</td>
-                                <td th:text="${#dates.format(movement.date, 'yyyy-MM-dd')}">2024-07-01</td>
-                                <td>
+                                
                                     <a th:href="@{/Movement/view/{id}(id=${movement.movementId})}" 
                                        class="action-btn btn-view">
                                         <i class="fas fa-eye"></i>
                                     </a>
-                                </td>
+                                
                             </tr>
                         </tbody>
                     </table>
@@ -621,39 +609,29 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form th:action="@{/Movement/save}" method="post" id="updateLocationForm">
-                        <input type="hidden" name="type" value="Movement">
+                     <form id="updateLocationForm">
                         <div class="mb-3">
-                            <label for="assetId" class="form-label">Asset ID</label>
-                            <input type="text" class="form-control" id="assetId" name="assetId" required>
+                            <label for="updateAssetId" class="form-label">Asset ID</label>
+                            <input type="text" class="form-control" id="updateAssetId" required>
                         </div>
                         <div class="mb-3">
-                            <label for="roomId" class="form-label">Room</label>
-                            <select class="form-control" id="roomId" name="roomId" required>
-                                <option th:each="room : ${rooms}" 
-                                        th:value="${room.roomId}" 
-                                        th:text="${room.roomName}"></option>
-                            </select>
+                            <label for="newLocation" class="form-label">New Location</label>
+                            <input type="text" class="form-control" id="newLocation" required>
                         </div>
                         <div class="mb-3">
-                            <label for="locationDetails" class="form-label">Location Details</label>
-                            <input type="text" class="form-control" id="locationDetails" name="locationDetails" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="date" class="form-label">Date</label>
-                            <input type="date" class="form-control" id="date" name="date" required>
+                            <label for="updateReason" class="form-label">Reason for Update</label>
+                            <textarea class="form-control" id="updateReason" rows="3"></textarea>
                         </div>
                         <div class="d-flex justify-content-end gap-2">
                             <button type="reset" class="btn btn-secondary"><i class="fas fa-times me-2"></i>Clear</button>
                             <button type="submit" class="btn btn-primary"><i class="fas fa-save me-2"></i>Update Location</button>
                         </div>
                     </form>
-                </div>
+                      </div>
             </div>
         </div>
     </div>
-
-    <!-- Transfer Asset Modal -->
+<!-- Transfer Asset Modal -->
     <div class="modal fade" id="transferAssetModal" tabindex="-1" aria-labelledby="transferAssetModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -662,39 +640,39 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form th:action="@{/Movement/save}" method="post" id="transferAssetForm">
-                        <input type="hidden" name="type" value="Transfer">
+                    <form id="transferAssetForm">
                         <div class="mb-3">
                             <label for="transferAssetId" class="form-label">Asset ID</label>
-                            <input type="text" class="form-control" id="transferAssetId" name="assetId" required>
+                            <input type="text" class="form-control" id="transferAssetId" required>
                         </div>
                         <div class="mb-3">
-                            <label for="transferRoomId" class="form-label">New Room</label>
-                            <select class="form-control" id="transferRoomId" name="roomId" required>
-                                <option th:each="room : ${rooms}" 
-                                        th:value="${room.roomId}" 
-                                        th:text="${room.roomName}"></option>
-                            </select>
+                            <label for="currentLocation" class="form-label">Current Location</label>
+                            <input type="text" class="form-control" id="currentLocation" required>
                         </div>
                         <div class="mb-3">
-                            <label for="transferLocationDetails" class="form-label">Location Details</label>
-                            <input type="text" class="form-control" id="transferLocationDetails" name="locationDetails" required>
+                            <label for="transferNewLocation" class="form-label">New Location</label>
+                            <input type="text" class="form-control" id="transferNewLocation" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="transferredBy" class="form-label">Transferred By</label>
+                            <input type="text" class="form-control" id="transferredBy" required>
                         </div>
                         <div class="mb-3">
                             <label for="transferDate" class="form-label">Transfer Date</label>
-                            <input type="date" class="form-control" id="transferDate" name="date" required>
+                            <input type="date" class="form-control" id="transferDate" required>
                         </div>
                         <div class="d-flex justify-content-end gap-2">
                             <button type="reset" class="btn btn-secondary"><i class="fas fa-times me-2"></i>Clear</button>
-                            <button type="submit" class="btn btn-success"><i class="fas fa-exchange-alt me-2"></i>Initiate Transfer</button>
+                            <button type="submit" class="btn btn-success"><i class="fas fa-arrow-right-arrow-left me-2"></i>Initiate Transfer</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+                  
 
-    <footer class="main-footer">
+      <footer class="main-footer">
         <!-- Your existing footer -->
           <div class="footer-container">
             <div class="footer-row">

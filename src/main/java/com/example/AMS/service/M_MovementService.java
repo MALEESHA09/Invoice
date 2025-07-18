@@ -1,13 +1,19 @@
 package com.example.AMS.service;
 
-import com.example.AMS.model.*;
-import com.example.AMS.repository.*;
+import java.util.Date;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
-import java.util.List;
+import com.example.AMS.model.Asset;
+import com.example.AMS.model.Location;
+import com.example.AMS.model.Movement;
+import com.example.AMS.model.Room;
+import com.example.AMS.repository.M_AssetRepository;
+import com.example.AMS.repository.M_MovementRepository;
+import com.example.AMS.repository.M_RoomRepository;
 
 @Service
 public class M_MovementService {
@@ -68,5 +74,15 @@ public class M_MovementService {
 
     public List<Movement> getAllMovements() {
         return movementRepository.findAll();
+    }
+
+    public void saveMovement(String assetId, String roomId, String locationDetails, String type, Date date) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'saveMovement'");
+    }
+
+    public Object getMovementsBy(Long movementId) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getMovementsBy'");
     }
 }

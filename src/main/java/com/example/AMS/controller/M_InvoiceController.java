@@ -43,8 +43,8 @@ public class M_InvoiceController {
     @GetMapping
     public String showInvoicePage(Model model, 
                                 @RequestParam(required = false) String search) {
-        model.addAttribute("vendors", vendorService.getAllVendors());
-        model.addAttribute("assets", assetService.getAllAssets());
+        model.addAttribute("vendor", vendorService.getAllVendors());
+        model.addAttribute("asset", assetService.getAllAssets());
         model.addAttribute("invoice", new Invoice());
         
         List<Invoice> invoices;
@@ -54,29 +54,29 @@ public class M_InvoiceController {
             invoices = invoiceService.getAllInvoices();
         }
         
-        model.addAttribute("invoices", invoices);
-        return "invoice/list";
+        model.addAttribute("invoice", invoices);
+        return "invoices/list";
     }
 
    @PostMapping("/save")
-public String saveInvoice(@Valid @ModelAttribute("invoice") Invoice invoice,
+public String saveInvoice(@Valid @ModelAttribute("invoice") Invoice invoices,
                         BindingResult result,
                         RedirectAttributes redirectAttributes,
                         Model model) {
     
     if (result.hasErrors()) {
-        model.addAttribute("vendors", vendorService.getAllVendors());
-        model.addAttribute("assets", assetService.getAllAssets());
-        model.addAttribute("invoices", invoiceService.getAllInvoices());
-        return "invoice/list";
+        model.addAttribute("vendor", vendorService.getAllVendors());
+        model.addAttribute("asset", assetService.getAllAssets());
+        model.addAttribute("invoice", invoiceService.getAllInvoices());
+        return "invoices/list";
     }
     
     try {
         // Set the full vendor and asset objects
-        invoice.setVendor(vendorService.getVendorById(invoice.getVendor().getVendorId()));
-        invoice.setAsset(assetService.getAssetById(invoice.getAsset().getAssetId()));
+        invoices.setVendor(vendorService.getVendorById(invoices.getVendor().getVendorId()));
+        invoices.setAsset(assetService.getAssetById(invoices.getAsset().getAssetId()));
         
-        invoiceService.saveInvoice(invoice);
+        invoiceService.saveInvoice(invoices);
         redirectAttributes.addFlashAttribute("success", "Invoice saved successfully");
         return "redirect:/invoices";
     } catch (Exception e) {
@@ -91,8 +91,8 @@ public String saveInvoice(@Valid @ModelAttribute("invoice") Invoice invoice,
             return "redirect:/invoices?error=notfound";
         }
         model.addAttribute("invoice", invoice);
-        model.addAttribute("assets", assetService.findByInvoiceId(id));
-        return "invoice/view";
+        model.addAttribute("asset", assetService.findByInvoiceId(id));
+        return "invoices/list";
     }
 
     @PostMapping("/delete/{id}")
@@ -115,4 +115,4 @@ public String saveInvoice(@Valid @ModelAttribute("invoice") Invoice invoice,
     public List<Asset> getAssetsByInvoiceId(@PathVariable String invoiceId) {
         return assetService.findByInvoiceId(invoiceId);
     }
-}
+} 

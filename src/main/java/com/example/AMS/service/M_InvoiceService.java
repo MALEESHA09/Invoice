@@ -35,5 +35,4 @@ public class M_InvoiceService {
     public void deleteInvoice(String id) {
         invoiceRepository.deleteById(id);
     }
-    
 }

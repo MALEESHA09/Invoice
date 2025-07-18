@@ -9,10 +9,7 @@ import org.springframework.data.repository.query.Param;
 import com.example.AMS.model.Invoice;
 
 public interface M_InvoiceRepository extends JpaRepository<Invoice, String> {
-    
+
     @Query("SELECT i FROM Invoice i WHERE i.invoiceId LIKE :searchTerm OR i.asset.name LIKE :searchTerm OR i.vendor.vendorName LIKE :searchTerm")
     List<Invoice> searchInvoices(@Param("searchTerm") String searchTerm);
-    
-    @Override
-    <S extends Invoice> S save(S entity); 
-} 
+}
