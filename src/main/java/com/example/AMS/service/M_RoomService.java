@@ -1,21 +1,17 @@
 package com.example.AMS.service;
 
-import java.util.List;
-
+import com.example.AMS.model.Room;
+import com.example.AMS.repository.M_RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.AMS.model.Room;
-import com.example.AMS.repository.M_RoomRepository;
+import java.util.List;
 
 @Service
 public class M_RoomService {
-    private final M_RoomRepository roomRepository;
 
     @Autowired
-    public M_RoomService(M_RoomRepository roomRepository) {
-        this.roomRepository = roomRepository;
-    }
+    private M_RoomRepository roomRepository;
 
     public List<Room> getAllRooms() {
         return roomRepository.findAll();
@@ -31,17 +27,5 @@ public class M_RoomService {
 
     public void deleteRoom(String roomId) {
         roomRepository.deleteById(roomId);
-    }
-
-    public List<Room> searchRooms(String keyword) {
-        return roomRepository.searchRooms(keyword);
-    }
-
-    public List<Room> findByRoomName(String roomName) {
-        return roomRepository.findByRoomNameContainingIgnoreCase(roomName);
-    }
-
-    public List<Room> findByLocationId(String locationId) {
-        return roomRepository.findByLocationLocationId(locationId);
     }
 }

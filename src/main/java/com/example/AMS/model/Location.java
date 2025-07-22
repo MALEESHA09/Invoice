@@ -16,7 +16,7 @@ import jakarta.persistence.OneToMany;
 public class Location {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String locationId;
+    private Long locationId;
     
     private Date transferDate;
     private String departmentName;
@@ -36,11 +36,11 @@ public class Location {
     }
 
     // Getters and Setters
-    public String getLocationId() {
+    public Long getLocationId() {
         return locationId;
     }
 
-    public void setLocationId(String locationId) {
+    public void setLocationId(Long locationId) {
         this.locationId = locationId;
     }
 

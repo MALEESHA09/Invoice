@@ -12,12 +12,13 @@ public class Invoice {
     private String invoiceId;
    
     @ManyToOne
-    @JoinColumn(name = "assetId")
-    private Asset asset;
+    @JoinColumn(name = "vendor_Id")
+    private Vendor vendor;
 
     @ManyToOne
-    @JoinColumn(name = "venderId")
-    private Vendor vendor;
+    @JoinColumn(name = "asset_Id")
+    private Asset asset;
+    
 
     private Date invoiceDate;
     private int itemCount;
@@ -30,7 +31,7 @@ public class Invoice {
     public void setInvoiceDate(Date invoiceDate) { this.invoiceDate = invoiceDate; }
     public int getItemCount() { return itemCount; }
     public void setItemCount(int itemCount) { this.itemCount = itemCount; }
-    public Asset getAsset() { return asset; }
+     public Asset getAsset() { return asset; }
     public void setAsset(Asset asset) { this.asset = asset; }
     public Vendor getVendor() { return vendor; }
     public void setVendor(Vendor vendor) { this.vendor = vendor; }

@@ -74,7 +74,7 @@ public String saveInvoice(@Valid @ModelAttribute("invoice") Invoice invoices,
     try {
         // Set the full vendor and asset objects
         invoices.setVendor(vendorService.getVendorById(invoices.getVendor().getVendorId()));
-        invoices.setAsset(assetService.getAssetById(invoices.getAsset().getAssetId()));
+
         
         invoiceService.saveInvoice(invoices);
         redirectAttributes.addFlashAttribute("success", "Invoice saved successfully");

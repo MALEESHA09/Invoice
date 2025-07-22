@@ -1,5 +1,8 @@
 package com.example.AMS.model;
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Room {
@@ -8,7 +11,7 @@ public class Room {
     private String roomName;
 
     @ManyToOne
-    @JoinColumn(name = "locationId")
+    @JoinColumn(name = "location_Id")
     private Location location;
 
     // Getters and Setters

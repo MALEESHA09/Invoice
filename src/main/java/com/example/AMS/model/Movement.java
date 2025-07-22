@@ -1,7 +1,14 @@
 package com.example.AMS.model;
 
-import jakarta.persistence.*;
 import java.util.Date;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Movement {
@@ -21,13 +28,9 @@ public class Movement {
     @JoinColumn(name = "room_id")
     private Room room;
      
-    @ManyToOne
-    @JoinColumn(name = "from_location_id")
-    private Location fromLocation;
-    
-    @ManyToOne
-    @JoinColumn(name = "to_location_id")
-    private Location toLocation;
+     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "location_id")
+    private Location location;
     
     
     // Getters and Setters
@@ -78,6 +81,15 @@ public class Movement {
     public void setRoom(Room room) {
         this.room = room;
     }
+    public Location getLocation() {
+    return location;
+    }
+
+    public void setLocation(Location location) {
+    this.location = location;
+    }
+
+
 
     // toString() method for debugging/logging
     @Override
