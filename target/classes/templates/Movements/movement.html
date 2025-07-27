@@ -568,25 +568,30 @@
                                 <th>Actions</th>
                             </tr>
                         </thead>
-                        <tbody id="movementTableBody">
-                            <tr th:each="movement : ${movements}" 
-                                th:data-movement-id="${movement.movementId}"
-                                th:data-asset-id="${movement.asset.assetId}"
-                                th:data-asset-name="${movement.assetName}"
-                                th:data-room-name="${movement.room.roomName}"
-                                th:data-type="${movement.type}"
-                                th:data-location="${movement.locationDetails}"
-                                th:data-date="${#dates.format(movement.date, 'yyyy-MM-dd')}">
-                                
-                                    <a th:href="@{/Movement/view/{id}(id=${movement.movementId})}" 
-                                       class="action-btn btn-view">
-                                        <i class="fas fa-eye"></i>
-                                    </a>
-                                
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                        <div th:if="${#lists.isEmpty(movements)}" class="alert alert-warning">
+    No movements found!
+</div>
+ <tbody id="movementTableBody">
+     <tr th:each="movement : ${movements}">
+    <td th:text="${movement.movementId}"></td>
+    <td th:text="${movement.asset.assetId}"></td>
+    <td th:text="${movement.assetName}"></td>
+    <td th:text="${movement.room.roomName}"></td>
+    <td th:text="${movement.type}"></td>
+    <td th:text="${movement.locationDetails}"></td>
+    <td th:text="${#dates.format(movement.date, 'yyyy-MM-dd')}"></td>
+    <td>
+        <a th:href="@{/movements/view/{id}(id=${movement.movementId})}" 
+           class="action-btn btn-view">
+            <i class="fas fa-eye"></i>
+        </a>
+    </td>
+</tr>
+
+
+</tbody>
+</table>
+</div>
 
 
             <div class="d-flex justify-content-start gap-3 mb-4 flex-wrap">
